@@ -1,5 +1,5 @@
 # Santanniadi
-Immagine Docker utilizzata per le Santanniadi.
+Immagine Docker per la gestione di tornei sportivi.
 
 È basata interamente su [Bracket](https://github.com/evroon/bracket), fare riferimento alla repo di GitHub e alla documentazione associata per tutto.
 
