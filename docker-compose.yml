@@ -1,0 +1,38 @@
+networks:
+  bracket_lan:
+    driver: bridge
+
+volumes:
+  bracket_pg_data:
+
+services:
+  santanniadi:
+    depends_on:
+      - postgres
+    environment:
+      ENVIRONMENT: DEVELOPMENT
+      PG_DSN: postgresql://bracket_dev:bracket_dev@postgres:5432/bracket_dev
+      NEXT_PUBLIC_HCAPTCHA_SITE_KEY: 10000000-ffff-ffff-ffff-000000000001
+      CORS_ORIGINS: http://localhost
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
+    build: ./
+    networks:
+      - bracket_lan
+    restart: unless-stopped
+    volumes:
+      - ./app_volume:/app/static
+    ports:
+      - 80:3000
+      - 8080:8400
+
+  postgres:
+    environment:
+      POSTGRES_DB: bracket_dev
+      POSTGRES_PASSWORD: bracket_dev
+      POSTGRES_USER: bracket_dev
+    image: postgres
+    networks:
+      - bracket_lan
+    restart: always
+    volumes:
+      - ./bracket_pg_data:/var/lib/postgresql/data
